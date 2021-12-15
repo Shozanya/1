@@ -1,5 +1,5 @@
 #include <SMLF/Graphics.hpp>
-#unclude <time.h>
+#include <time.h>
 using namespace sf;
 
 int main()
