@@ -6,6 +6,11 @@ int main()
 {
   RenderWindow window(VideoMode(320, 480), "TETRIS");
   
+  Texture k;
+  k.loadFromFile("textures/kubiki.png");
+  
+  Sprite s(k);
+  
   while (window.isOpen())
   {
     Event e;
@@ -15,6 +20,7 @@ int main()
         window.close();
     }
     window.clear(Color::White);
+    window.draw(s);
     window.display();
   }
   
