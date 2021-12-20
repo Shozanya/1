@@ -10,7 +10,8 @@ int main()
   k.loadFromFile("textures/kubiki.png");
   
   Sprite s(k);
-  
+  s.setTextureReact(IntReact(0,0,18,18)); //размер кубика 18 пискселей
+    
   while (window.isOpen())
   {
     Event e;
