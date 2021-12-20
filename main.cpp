@@ -50,7 +50,7 @@ int main()
     window.clear(Color::White);
     for (int i=0; i<4; i++)
     {
-      s.setPosition(a[i].x*18,a[i].y*18;
+      s.setPosition(a[i].x*18,a[i].y*18);
       window.draw(s);
     }                
     window.display();
