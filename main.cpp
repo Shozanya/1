@@ -29,6 +29,10 @@ int main()
   
   Sprite s(k);
   s.setTextureReact(IntReact(0,0,18,18)); //размер кубика 18 пискселей
+  
+  int dx=0;
+  bool r=0;
+  int color=1;
     
   while (window.isOpen())
   {
@@ -37,15 +41,37 @@ int main()
     {
       if (e.type == Event::Closed)
         window.close();
+      
+      if (e.type == Event::KeyPressed)
+        if (e.key.code==Keyboard::Up) r=true;
+        else if e.key.code==Keyboard::Left) dx=-1
+        else if e.key.code==Keyboard::Right) dx=1;
+    }
+    
+    for (int i=0; i<4; i++) a[i].x+=dx; //Движение фигуры от нажатия
+    
+    if (r) //если нажата клавиша поворота фигуры
+    {
+      Point p = a[1]; // центр поворота фигуры
+      for (int i=0; i<4; i++)
+      {
+        int x = a[i].y-p.y;
+        int y = a[i].x-p.x;
+        a[i].x = p.x - x;
+        a[i].y = p.y + y;
+      }
     }
     
     int n=3; // переменная n влияет на то какая фигура будет собрана, данный способ генерации мне пришлось подсмотреть)
+    if (a[0].x==0)
     for (int i=0; i<4; i++)
     {
       a[i].x = figures[n][i] % 2;
       a[i].y = figures[n][i] / 2;
     }
     
+    dx=0;
+    r=0;
     
     window.clear(Color::White);
     for (int i=0; i<4; i++)
