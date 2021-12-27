@@ -33,9 +33,16 @@ int main()
   int dx=0;
   bool r=0;
   int color=1;
+  float timer=0, delay=0.2;
+  
+  Clock clock;
     
   while (window.isOpen())
   {
+    float time = clock.getElapsedTime().asSeconds(); // переменная меняющее значение по времени, необходимая для падения фигуры
+    clock.restart();
+    timer+=time;
+    
     Event e;
     while (window.pollEvent(e))
     {
@@ -60,6 +67,12 @@ int main()
         a[i].x = p.x - x;
         a[i].y = p.y + y;
       }
+    }
+    
+    if (timer>delay) // падение фигуры
+    {
+      for (int i=0; i<4; i++) a[i].y+=1;
+      timer=0;
     }
     
     int n=3; // переменная n влияет на то какая фигура будет собрана, данный способ генерации мне пришлось подсмотреть)
