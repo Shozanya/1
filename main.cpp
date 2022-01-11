@@ -20,8 +20,20 @@ int figures[7][4] =
   3,5,7,6, // фигура - уголок в виде L, но в другую сторону
   2,3,4,5, // фигура в виде квадрата
 };
+
+bool check()
+{
+  for (int i=0; i<4; i++)
+    if (a[i].x<0 || a[i].x>=N || a[i].y>=M) return 0;
+    else if (field[a[i].y][a[i].x]) return 0;
+  
+  return 1;
+};
+
 int main()
 {
+  srand(time(0));
+  
   RenderWindow window(VideoMode(320, 480), "TETRIS");
   
   Texture k;
@@ -32,7 +44,7 @@ int main()
   
   int dx=0;
   bool r=0;
-  int color=1;
+  int colorNum=1;
   float timer=0, delay=0.2;
   
   Clock clock;
@@ -67,26 +79,43 @@ int main()
         a[i].x = p.x - x;
         a[i].y = p.y + y;
       }
+      if (!check()) for (int i=0; i<4; i++) a[i] = b[i];
     }
     
     if (timer>delay) // падение фигуры
     {
-      for (int i=0; i<4; i++) a[i].y+=1;
+      for (int i=0; i<4; i++) { b[i]=a[i]; a[i].y+=1;}
+      
+      if (!check())
+      {
+        for (int i=0; i<4; i++) field[b[i].y][b[i].x]=colorNum;
+        
+        colorNum = 1+rand()%7;
+        int n=rand()%7;
+        for (int i=0; i<4; i++)
+        {
+          a[i].x = figures[n][i] % 2;
+          a[i].y = figures[n][i] / 2;
+        }
+      }
+      
       timer=0;
-    }
-    
-    int n=3; // переменная n влияет на то какая фигура будет собрана, данный способ генерации мне пришлось подсмотреть)
-    if (a[0].x==0)
-    for (int i=0; i<4; i++)
-    {
-      a[i].x = figures[n][i] % 2;
-      a[i].y = figures[n][i] / 2;
     }
     
     dx=0;
     r=0;
     
+   
     window.clear(Color::White);
+    
+    for (int i=0; i<M; i++)
+      for (int j=0; j<N; j++)
+      {
+        if (field[i][j]==0) continue;
+        s.setPosition(j*18, i*18);
+        winow.draw(s);
+      }
+    
     for (int i=0; i<4; i++)
     {
       s.setPosition(a[i].x*18,a[i].y*18);
