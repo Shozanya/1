@@ -67,7 +67,10 @@ int main()
         else if e.key.code==Keyboard::Right) dx=1;
     }
     
-    for (int i=0; i<4; i++) a[i].x+=dx; //Движение фигуры от нажатия
+    if (Keyboard::isKeyPressed(Keyboard::Down)) delay=0.05;
+    
+    for (int i=0; i<4; i++) { b[i]=a[i]; a[i].x+=dx; }
+    if (!check()) for (int i=0;i<4;i++) a[i]=b[i]; /// тут была ошибка которую блин
     
     if (r) //если нажата клавиша поворота фигуры
     {
@@ -104,6 +107,7 @@ int main()
     
     dx=0;
     r=0;
+    delay=0.3;
     
    
     window.clear(Color::White);
@@ -112,12 +116,14 @@ int main()
       for (int j=0; j<N; j++)
       {
         if (field[i][j]==0) continue;
+        s.setTextureRect(IntRect(field[i][j]*18,0,18,18));
         s.setPosition(j*18, i*18);
         winow.draw(s);
       }
     
     for (int i=0; i<4; i++)
     {
+      s.setTextureRect(IntRect(colorNum*18,0,18,18)); ///разноцветные фигуры!
       s.setPosition(a[i].x*18,a[i].y*18);
       window.draw(s);
     }                
