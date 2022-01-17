@@ -105,6 +105,18 @@ int main()
       timer=0;
     }
     
+    int k=M-1; ///проверка линий чтобы они удалялись
+    for (int i=M-1;i>0;i--)
+    {
+        int count=0;
+        for (int j=0;j<N;j++)
+        {
+            if (field[i][j]) count++;
+            field[k][j]=field[i][j];
+        }
+        if (count<N) k--;
+    }
+    
     dx=0;
     r=0;
     delay=0.3;
