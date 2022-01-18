@@ -121,7 +121,6 @@ int main()
     r=0;
     delay=0.3;
     
-   
     window.clear(Color::White);
     
     for (int i=0; i<M; i++)
